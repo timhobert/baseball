@@ -144,6 +144,20 @@ h4 { font-size: 18px; margin-bottom: 8px; }
 }
 .skip-link:focus { top: 16px; }
 
+/* ICONS */
+.icon {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.125em;
+  fill: currentColor;
+  flex-shrink: 0;
+}
+
+.icon-20 { width: 20px; height: 20px; }
+.icon-24 { width: 24px; height: 24px; }
+.icon-32 { width: 32px; height: 32px; }
+
 /* NAV */
 .site-nav {
   position: sticky;
@@ -175,9 +189,11 @@ h4 { font-size: 18px; margin-bottom: 8px; }
   white-space: nowrap;
 }
 
-.nav-links { display: none; list-style: none; gap: 24px; align-items: center; }
+.nav-links { display: none; list-style: none; gap: 8px; align-items: center; }
 
-.nav-links a {
+.nav-links > li { position: relative; }
+
+.nav-link {
   font-family: var(--font-display);
   font-size: 12px;
   font-weight: 500;
@@ -185,17 +201,82 @@ h4 { font-size: 18px; margin-bottom: 8px; }
   text-transform: uppercase;
   color: var(--gray-text);
   text-decoration: none;
-  padding: 4px 0;
-  border-bottom: 2px solid transparent;
-  transition: color 0.2s, border-color 0.2s;
+  padding: 6px 12px;
+  border-radius: var(--radius-pill);
+  transition: color 0.2s, background-color 0.2s;
   white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  border: none;
+  background: none;
 }
 
-.nav-links a:hover,
-.nav-links a.active {
+.nav-link:hover,
+.nav-link.active {
   color: var(--text);
-  border-bottom-color: var(--mustard);
+  background: var(--off-white);
   text-decoration: none;
+}
+
+.nav-link .caret {
+  width: 12px;
+  height: 12px;
+  transition: transform 0.2s;
+}
+
+.nav-group:hover .caret,
+.nav-group.open .caret { transform: rotate(180deg); }
+
+.nav-dropdown {
+  display: none;
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 8px;
+  min-width: 180px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+}
+
+.nav-group:hover .nav-dropdown,
+.nav-group.open .nav-dropdown { display: block; }
+
+.nav-dropdown a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--gray-text);
+  text-decoration: none;
+  border-radius: var(--radius-sm);
+  transition: background 0.15s, color 0.15s;
+}
+
+.nav-dropdown a:hover {
+  background: var(--off-white);
+  color: var(--text);
+  text-decoration: none;
+}
+
+.nav-dropdown a .icon { color: var(--gray-light); }
+.nav-dropdown a:hover .icon { color: var(--text); }
+
+.nav-link--schedules {
+  background: var(--text);
+  color: var(--white) !important;
+}
+
+.nav-link--schedules:hover {
+  background: var(--mustard);
+  color: var(--white) !important;
 }
 
 .hamburger {
@@ -230,21 +311,40 @@ h4 { font-size: 18px; margin-bottom: 8px; }
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 32px;
+  gap: 12px;
+  padding: 80px 40px;
+  overflow-y: auto;
 }
 
 .mobile-menu.open { display: flex; }
 
+.mobile-group-label {
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gray-light);
+  margin-top: 16px;
+  margin-bottom: 4px;
+}
+
+.mobile-group-label:first-child { margin-top: 0; }
+
 .mobile-menu a {
   font-family: var(--font-display);
-  font-size: 22px;
-  font-weight: 500;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  font-size: 20px;
+  font-weight: 400;
+  letter-spacing: 0.02em;
   color: var(--text);
   text-decoration: none;
-  padding: 12px 24px;
+  padding: 8px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
+
+.mobile-menu a .icon { color: var(--gray-light); width: 20px; height: 20px; }
 
 .mobile-menu a:hover { color: var(--mustard); text-decoration: none; }
 
@@ -375,7 +475,7 @@ section:nth-child(even) { background: var(--off-white); }
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 20px;
+  color: var(--gray-light);
 }
 
 .equip-item h4 {
@@ -855,10 +955,12 @@ section:nth-child(even) { background: var(--off-white); }
   section { padding: 72px 0; }
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 880px) {
   .nav-links { display: flex; }
   .hamburger { display: none; }
+}
 
+@media (min-width: 1024px) {
   .weekly-grid { grid-template-columns: repeat(4, 1fr); }
   .hero h1 { font-size: 52px; }
   .hero-img { max-width: 400px; }
@@ -875,7 +977,7 @@ section:nth-child(even) { background: var(--off-white); }
 
 /* PRINT */
 @media print {
-  .site-nav, .hamburger, .mobile-menu, .video-grid, .video-card, .age-tabs { display: none !important; }
+  .site-nav, .hamburger, .mobile-menu, .nav-dropdown, .video-grid, .video-card, .age-tabs { display: none !important; }
   section { padding: 24px 0; break-inside: avoid; }
   .weekly-grid { grid-template-columns: repeat(7, 1fr); }
   body { font-size: 12px; }
@@ -892,15 +994,25 @@ section:nth-child(even) { background: var(--off-white); }
   <div class="nav-inner">
     <span class="nav-logo">Youth Baseball Guide</span>
     <ul class="nav-links">
-      <li><a href="#equipment">Equipment</a></li>
-      <li><a href="#warmup">Warm-Up</a></li>
-      <li><a href="#hitting">Hitting</a></li>
-      <li><a href="#throwing">Throwing</a></li>
-      <li><a href="#fielding">Fielding</a></li>
-      <li><a href="#pitching">Pitching</a></li>
-      <li><a href="#baserunning">Speed</a></li>
-      <li><a href="#mental">Mental</a></li>
-      <li><a href="#schedules">Schedules</a></li>
+      <li class="nav-group">
+        <button class="nav-link">Skills <svg class="caret" viewBox="0 0 256 256" fill="currentColor"><path d="M212.24,100.24l-80,80a6,6,0,0,1-8.48,0l-80-80a6,6,0,0,1,8.48-8.48L128,167.51l75.76-75.75a6,6,0,0,1,8.48,8.48Z"/></svg></button>
+        <div class="nav-dropdown">
+          <a href="#hitting"><svg class="icon icon-20" viewBox="0 0 256 256" fill="currentColor"><path d="M220.06,84a102.06,102.06,0,1,1-24.31-32.27l24-24a6,6,0,0,1,8.48,8.49l-96,96a6,6,0,1,1-8.48-8.49l29.39-29.4a42,42,0,1,0,16.78,31.24,6,6,0,1,1,12-.68A54,54,0,1,1,161.7,85.83l25.54-25.55a89.91,89.91,0,1,0,22,28.93A6,6,0,1,1,220.06,84Z"/></svg> Hitting</a>
+          <a href="#throwing"><svg class="icon icon-20" viewBox="0 0 256 256" fill="currentColor"><path d="M198,64V168a6,6,0,0,1-12,0V78.48L68.24,196.24a6,6,0,0,1-8.48-8.48L177.52,70H88a6,6,0,0,1,0-12H192A6,6,0,0,1,198,64Z"/></svg> Throwing</a>
+          <a href="#fielding"><svg class="icon icon-20" viewBox="0 0 256 256" fill="currentColor"><path d="M208,42H48A14,14,0,0,0,34,56v56c0,51.94,25.12,83.4,46.2,100.64,22.73,18.6,45.27,24.89,46.22,25.15a6,6,0,0,0,3.16,0c.95-.26,23.49-6.55,46.22-25.15C196.88,195.4,222,163.94,222,112V56A14,14,0,0,0,208,42ZM168.56,203.06A131.17,131.17,0,0,1,128,225.72a130.94,130.94,0,0,1-40.56-22.66,113.09,113.09,0,0,1-25.56-29.45L128,127.32l66.12,46.29A113.09,113.09,0,0,1,168.56,203.06ZM210,112c0,18.75-3.44,35.75-10.28,50.88l-68.28-47.8a6,6,0,0,0-6.88,0l-68.28,47.8C49.44,147.75,46,130.75,46,112V56a2,2,0,0,1,2-2H208a2,2,0,0,1,2,2Z"/></svg> Fielding</a>
+          <a href="#pitching"><svg class="icon icon-20" viewBox="0 0 256 256" fill="currentColor"><path d="M128,42a94,94,0,1,0,94,94A94.11,94.11,0,0,0,128,42Zm0,176a82,82,0,1,1,82-82A82.1,82.1,0,0,1,128,218ZM172.24,91.76a6,6,0,0,1,0,8.48l-40,40a6,6,0,1,1-8.48-8.48l40-40A6,6,0,0,1,172.24,91.76ZM98,16a6,6,0,0,1,6-6h48a6,6,0,0,1,0,12H104A6,6,0,0,1,98,16Z"/></svg> Pitching</a>
+        </div>
+      </li>
+      <li class="nav-group">
+        <button class="nav-link">Training <svg class="caret" viewBox="0 0 256 256" fill="currentColor"><path d="M212.24,100.24l-80,80a6,6,0,0,1-8.48,0l-80-80a6,6,0,0,1,8.48-8.48L128,167.51l75.76-75.75a6,6,0,0,1,8.48,8.48Z"/></svg></button>
+        <div class="nav-dropdown">
+          <a href="#warmup"><svg class="icon icon-20" viewBox="0 0 256 256" fill="currentColor"><path d="M178,42c-21,0-39.26,9.47-50,25.34C117.26,51.47,99,42,78,42a60.07,60.07,0,0,0-60,60q0,1.09,0,2.19a6,6,0,0,0,12-.38c0-.6,0-1.21,0-1.81A48.05,48.05,0,0,1,78,54c20.28,0,37.31,10.83,44.45,28.27a6,6,0,0,0,11.1,0C140.69,64.83,157.72,54,178,54a48.05,48.05,0,0,1,48,48c0,55.73-81.61,105.65-98,115.11-9.84-5.66-43.09-25.82-68.16-53.16a6,6,0,1,0-8.84,8.1c30.94,33.77,72.41,56.29,74.16,57.23a6,6,0,0,0,5.68,0,334.68,334.68,0,0,0,53.06-37C219.8,161.59,238,131.2,238,102A60.07,60.07,0,0,0,178,42Z"/></svg> Warm-Up</a>
+          <a href="#baserunning"><svg class="icon icon-20" viewBox="0 0 256 256" fill="currentColor"><path d="M213.84,118.63a6,6,0,0,0-3.73-4.25L150.88,92.17l15-75a6,6,0,0,0-10.27-5.27l-112,120a6,6,0,0,0,2.28,9.71l59.23,22.21-15,75a6,6,0,0,0,3.14,6.52A6.07,6.07,0,0,0,96,246a6,6,0,0,0,4.39-1.91l112-120A6,6,0,0,0,213.84,118.63ZM106,220.46l11.85-59.28a6,6,0,0,0-3.77-6.8l-55.6-20.85,91.46-98L138.12,94.82a6,6,0,0,0,3.77,6.8l55.6,20.85Z"/></svg> Speed &amp; Agility</a>
+          <a href="#mental"><svg class="icon icon-20" viewBox="0 0 256 256" fill="currentColor"><path d="M246,124a54.13,54.13,0,0,0-32-49.33V72a46,46,0,0,0-86-22.67A46,46,0,0,0,42,72v2.67a54,54,0,0,0,0,98.63V176a46,46,0,0,0,86,22.67A46,46,0,0,0,214,176v-2.7A54.07,54.07,0,0,0,246,124ZM88,210a34,34,0,0,1-34-32.94A53.67,53.67,0,0,0,64,178h8a6,6,0,0,0,0-12H64A42,42,0,0,1,50,84.39a6,6,0,0,0,4-5.66V72a34,34,0,0,1,68,0v73.05A45.89,45.89,0,0,0,88,130a6,6,0,0,0,0,12,34,34,0,0,1,0,68Zm104-44h-8a6,6,0,0,0,0,12h8a53.67,53.67,0,0,0,10-.94A34,34,0,1,1,168,142a6,6,0,0,0,0-12,45.89,45.89,0,0,0-34,15.05V72a34,34,0,0,1,68,0v6.73a6,6,0,0,0,4,5.66A42,42,0,0,1,192,166Zm14-54a6,6,0,0,1-6,6h-4a34,34,0,0,1-34-34V80a6,6,0,0,1,12,0v4a22,22,0,0,0,22,22h4A6,6,0,0,1,206,112ZM60,118H56a6,6,0,0,1,0-12h4A22,22,0,0,0,82,84V80a6,6,0,0,1,12,0v4A34,34,0,0,1,60,118Z"/></svg> Mental Game</a>
+        </div>
+      </li>
+      <li><a href="#equipment" class="nav-link"><svg class="icon icon-20" viewBox="0 0 256 256" fill="currentColor"><path d="M224.91,69.75a6,6,0,0,0-9.63-2.16l-41.07,37.9L154.7,101.3l-4.19-19.51,37.9-41.07a6,6,0,0,0-2.16-9.63,70,70,0,0,0-89.77,94.39l-61.39,53c-.11.09-.21.19-.32.3A30,30,0,0,0,77.2,221.23c.11-.11.21-.21.3-.32l53-61.39a70,70,0,0,0,94.39-89.77ZM160,154a58,58,0,0,1-28-7.22,6,6,0,0,0-7.45,1.33L68.57,212.88a18,18,0,0,1-25.45-25.45l64.76-55.94A6,6,0,0,0,109.2,124a58,58,0,0,1,64-84.53L139.58,75.93a6,6,0,0,0-1.45,5.33l5.65,26.35a6,6,0,0,0,4.61,4.61l26.35,5.65a6,6,0,0,0,5.33-1.45L216.49,82.8A58.06,58.06,0,0,1,160,154Z"/></svg> Equipment</a></li>
+      <li><a href="#schedules" class="nav-link nav-link--schedules"><svg class="icon icon-20" viewBox="0 0 256 256" fill="currentColor"><path d="M208,34H182V24a6,6,0,0,0-12,0V34H86V24a6,6,0,0,0-12,0V34H48A14,14,0,0,0,34,48V208a14,14,0,0,0,14,14H208a14,14,0,0,0,14-14V48A14,14,0,0,0,208,34ZM48,46H74V56a6,6,0,0,0,12,0V46h84V56a6,6,0,0,0,12,0V46h26a2,2,0,0,1,2,2V82H46V48A2,2,0,0,1,48,46ZM208,210H48a2,2,0,0,1-2-2V94H210V208A2,2,0,0,1,208,210Z"/></svg> Schedules</a></li>
     </ul>
     <button class="hamburger" aria-label="Open menu" aria-expanded="false">
       <span></span><span></span><span></span>
@@ -909,15 +1021,18 @@ section:nth-child(even) { background: var(--off-white); }
 </nav>
 
 <div class="mobile-menu" id="mobileMenu" role="dialog" aria-label="Navigation menu">
-  <a href="#equipment" class="mobile-link">Equipment</a>
-  <a href="#warmup" class="mobile-link">Warm-Up</a>
-  <a href="#hitting" class="mobile-link">Hitting</a>
-  <a href="#throwing" class="mobile-link">Throwing</a>
-  <a href="#fielding" class="mobile-link">Fielding</a>
-  <a href="#pitching" class="mobile-link">Pitching</a>
-  <a href="#baserunning" class="mobile-link">Speed</a>
-  <a href="#mental" class="mobile-link">Mental</a>
-  <a href="#schedules" class="mobile-link">Schedules</a>
+  <span class="mobile-group-label">Skills</span>
+  <a href="#hitting" class="mobile-link"><svg class="icon" viewBox="0 0 256 256" fill="currentColor"><path d="M220.06,84a102.06,102.06,0,1,1-24.31-32.27l24-24a6,6,0,0,1,8.48,8.49l-96,96a6,6,0,1,1-8.48-8.49l29.39-29.4a42,42,0,1,0,16.78,31.24,6,6,0,1,1,12-.68A54,54,0,1,1,161.7,85.83l25.54-25.55a89.91,89.91,0,1,0,22,28.93A6,6,0,1,1,220.06,84Z"/></svg> Hitting</a>
+  <a href="#throwing" class="mobile-link"><svg class="icon" viewBox="0 0 256 256" fill="currentColor"><path d="M198,64V168a6,6,0,0,1-12,0V78.48L68.24,196.24a6,6,0,0,1-8.48-8.48L177.52,70H88a6,6,0,0,1,0-12H192A6,6,0,0,1,198,64Z"/></svg> Throwing</a>
+  <a href="#fielding" class="mobile-link"><svg class="icon" viewBox="0 0 256 256" fill="currentColor"><path d="M208,42H48A14,14,0,0,0,34,56v56c0,51.94,25.12,83.4,46.2,100.64,22.73,18.6,45.27,24.89,46.22,25.15a6,6,0,0,0,3.16,0c.95-.26,23.49-6.55,46.22-25.15C196.88,195.4,222,163.94,222,112V56A14,14,0,0,0,208,42ZM168.56,203.06A131.17,131.17,0,0,1,128,225.72a130.94,130.94,0,0,1-40.56-22.66,113.09,113.09,0,0,1-25.56-29.45L128,127.32l66.12,46.29A113.09,113.09,0,0,1,168.56,203.06ZM210,112c0,18.75-3.44,35.75-10.28,50.88l-68.28-47.8a6,6,0,0,0-6.88,0l-68.28,47.8C49.44,147.75,46,130.75,46,112V56a2,2,0,0,1,2-2H208a2,2,0,0,1,2,2Z"/></svg> Fielding</a>
+  <a href="#pitching" class="mobile-link"><svg class="icon" viewBox="0 0 256 256" fill="currentColor"><path d="M128,42a94,94,0,1,0,94,94A94.11,94.11,0,0,0,128,42Zm0,176a82,82,0,1,1,82-82A82.1,82.1,0,0,1,128,218ZM172.24,91.76a6,6,0,0,1,0,8.48l-40,40a6,6,0,1,1-8.48-8.48l40-40A6,6,0,0,1,172.24,91.76ZM98,16a6,6,0,0,1,6-6h48a6,6,0,0,1,0,12H104A6,6,0,0,1,98,16Z"/></svg> Pitching</a>
+  <span class="mobile-group-label">Training</span>
+  <a href="#warmup" class="mobile-link"><svg class="icon" viewBox="0 0 256 256" fill="currentColor"><path d="M178,42c-21,0-39.26,9.47-50,25.34C117.26,51.47,99,42,78,42a60.07,60.07,0,0,0-60,60q0,1.09,0,2.19a6,6,0,0,0,12-.38c0-.6,0-1.21,0-1.81A48.05,48.05,0,0,1,78,54c20.28,0,37.31,10.83,44.45,28.27a6,6,0,0,0,11.1,0C140.69,64.83,157.72,54,178,54a48.05,48.05,0,0,1,48,48c0,55.73-81.61,105.65-98,115.11-9.84-5.66-43.09-25.82-68.16-53.16a6,6,0,1,0-8.84,8.1c30.94,33.77,72.41,56.29,74.16,57.23a6,6,0,0,0,5.68,0,334.68,334.68,0,0,0,53.06-37C219.8,161.59,238,131.2,238,102A60.07,60.07,0,0,0,178,42Z"/></svg> Warm-Up</a>
+  <a href="#baserunning" class="mobile-link"><svg class="icon" viewBox="0 0 256 256" fill="currentColor"><path d="M213.84,118.63a6,6,0,0,0-3.73-4.25L150.88,92.17l15-75a6,6,0,0,0-10.27-5.27l-112,120a6,6,0,0,0,2.28,9.71l59.23,22.21-15,75a6,6,0,0,0,3.14,6.52A6.07,6.07,0,0,0,96,246a6,6,0,0,0,4.39-1.91l112-120A6,6,0,0,0,213.84,118.63ZM106,220.46l11.85-59.28a6,6,0,0,0-3.77-6.8l-55.6-20.85,91.46-98L138.12,94.82a6,6,0,0,0,3.77,6.8l55.6,20.85Z"/></svg> Speed &amp; Agility</a>
+  <a href="#mental" class="mobile-link"><svg class="icon" viewBox="0 0 256 256" fill="currentColor"><path d="M246,124a54.13,54.13,0,0,0-32-49.33V72a46,46,0,0,0-86-22.67A46,46,0,0,0,42,72v2.67a54,54,0,0,0,0,98.63V176a46,46,0,0,0,86,22.67A46,46,0,0,0,214,176v-2.7A54.07,54.07,0,0,0,246,124ZM88,210a34,34,0,0,1-34-32.94A53.67,53.67,0,0,0,64,178h8a6,6,0,0,0,0-12H64A42,42,0,0,1,50,84.39a6,6,0,0,0,4-5.66V72a34,34,0,0,1,68,0v73.05A45.89,45.89,0,0,0,88,130a6,6,0,0,0,0,12,34,34,0,0,1,0,68Zm104-44h-8a6,6,0,0,0,0,12h8a53.67,53.67,0,0,0,10-.94A34,34,0,1,1,168,142a6,6,0,0,0,0-12,45.89,45.89,0,0,0-34,15.05V72a34,34,0,0,1,68,0v6.73a6,6,0,0,0,4,5.66A42,42,0,0,1,192,166Zm14-54a6,6,0,0,1-6,6h-4a34,34,0,0,1-34-34V80a6,6,0,0,1,12,0v4a22,22,0,0,0,22,22h4A6,6,0,0,1,206,112ZM60,118H56a6,6,0,0,1,0-12h4A22,22,0,0,0,82,84V80a6,6,0,0,1,12,0v4A34,34,0,0,1,60,118Z"/></svg> Mental Game</a>
+  <span class="mobile-group-label">Plan</span>
+  <a href="#equipment" class="mobile-link"><svg class="icon" viewBox="0 0 256 256" fill="currentColor"><path d="M224.91,69.75a6,6,0,0,0-9.63-2.16l-41.07,37.9L154.7,101.3l-4.19-19.51,37.9-41.07a6,6,0,0,0-2.16-9.63,70,70,0,0,0-89.77,94.39l-61.39,53c-.11.09-.21.19-.32.3A30,30,0,0,0,77.2,221.23c.11-.11.21-.21.3-.32l53-61.39a70,70,0,0,0,94.39-89.77ZM160,154a58,58,0,0,1-28-7.22,6,6,0,0,0-7.45,1.33L68.57,212.88a18,18,0,0,1-25.45-25.45l64.76-55.94A6,6,0,0,0,109.2,124a58,58,0,0,1,64-84.53L139.58,75.93a6,6,0,0,0-1.45,5.33l5.65,26.35a6,6,0,0,0,4.61,4.61l26.35,5.65a6,6,0,0,0,5.33-1.45L216.49,82.8A58.06,58.06,0,0,1,160,154Z"/></svg> Equipment</a>
+  <a href="#schedules" class="mobile-link"><svg class="icon" viewBox="0 0 256 256" fill="currentColor"><path d="M208,34H182V24a6,6,0,0,0-12,0V34H86V24a6,6,0,0,0-12,0V34H48A14,14,0,0,0,34,48V208a14,14,0,0,0,14,14H208a14,14,0,0,0,14-14V48A14,14,0,0,0,208,34ZM48,46H74V56a6,6,0,0,0,12,0V46h84V56a6,6,0,0,0,12,0V46h26a2,2,0,0,1,2,2V82H46V48A2,2,0,0,1,48,46ZM208,210H48a2,2,0,0,1-2-2V94H210V208A2,2,0,0,1,208,210Z"/></svg> Schedules</a>
 </div>
 
 <main id="main">
@@ -974,70 +1089,70 @@ section:nth-child(even) { background: var(--off-white); }
 
     <div class="equip-grid">
       <div class="equip-item">
-        <div class="equip-icon">🏏</div>
+        <div class="equip-icon"><svg class="icon icon-24" viewBox="0 0 256 256" fill="currentColor"><path d="M220.06,84a102.06,102.06,0,1,1-24.31-32.27l24-24a6,6,0,0,1,8.48,8.49l-96,96a6,6,0,1,1-8.48-8.49l29.39-29.4a42,42,0,1,0,16.78,31.24,6,6,0,1,1,12-.68A54,54,0,1,1,161.7,85.83l25.54-25.55a89.91,89.91,0,1,0,22,28.93A6,6,0,1,1,220.06,84Z"/></svg></div>
         <div>
           <h4>Batting Tee <span class="badge-essential">Essential</span></h4>
           <p>Adjustable height. Used daily by every level from tee-ball to the major leagues. The foundation of at-home hitting.</p>
         </div>
       </div>
       <div class="equip-item">
-        <div class="equip-icon">🥅</div>
+        <div class="equip-icon"><svg class="icon icon-24" viewBox="0 0 256 256" fill="currentColor"><path d="M208,42H48A14,14,0,0,0,34,56v56c0,51.94,25.12,83.4,46.2,100.64,22.73,18.6,45.27,24.89,46.22,25.15a6,6,0,0,0,3.16,0c.95-.26,23.49-6.55,46.22-25.15C196.88,195.4,222,163.94,222,112V56A14,14,0,0,0,208,42ZM168.56,203.06A131.17,131.17,0,0,1,128,225.72a130.94,130.94,0,0,1-40.56-22.66,113.09,113.09,0,0,1-25.56-29.45L128,127.32l66.12,46.29A113.09,113.09,0,0,1,168.56,203.06ZM210,112c0,18.75-3.44,35.75-10.28,50.88l-68.28-47.8a6,6,0,0,0-6.88,0l-68.28,47.8C49.44,147.75,46,130.75,46,112V56a2,2,0,0,1,2-2H208a2,2,0,0,1,2,2Z"/></svg></div>
         <div>
           <h4>Hitting Net <span class="badge-essential">Essential</span></h4>
           <p>7×7 ft pop-up net. Contains balls so you can practice in any backyard safely.</p>
         </div>
       </div>
       <div class="equip-item">
-        <div class="equip-icon">⚾</div>
+        <div class="equip-icon"><svg class="icon icon-24" viewBox="0 0 256 256" fill="currentColor"><path d="M128,26A102,102,0,1,0,230,128,102.12,102.12,0,0,0,128,26Zm67.31,161.67c-1-1.12-2-2.26-2.9-3.42a6,6,0,0,0-9.36,7.5c1.19,1.49,2.43,2.94,3.71,4.37a89.84,89.84,0,0,1-117.52,0c1.28-1.43,2.52-2.88,3.71-4.37a6,6,0,0,0-9.36-7.5c-.93,1.16-1.91,2.3-2.9,3.42a89.8,89.8,0,0,1,0-119.34c1,1.12,2,2.26,2.9,3.42A6,6,0,0,0,68.28,74,6,6,0,0,0,73,64.25c-1.19-1.49-2.43-2.94-3.71-4.37a89.84,89.84,0,0,1,117.52,0c-1.28,1.43-2.52,2.88-3.71,4.37a6,6,0,1,0,9.36,7.5c.93-1.16,1.91-2.3,2.9-3.42a89.8,89.8,0,0,1,0,119.34ZM93.92,145a101.43,101.43,0,0,1-4.4,17,6,6,0,1,1-11.31-4,89.91,89.91,0,0,0,3.87-15,6,6,0,1,1,11.84,2Zm0-34A6,6,0,0,1,89,117.92a6.74,6.74,0,0,1-1,.08,6,6,0,0,1-5.91-5,89.91,89.91,0,0,0-3.87-15,6,6,0,1,1,11.31-4A101.43,101.43,0,0,1,93.92,111Zm83.87,47a6,6,0,1,1-11.31,4,101.43,101.43,0,0,1-4.4-17,6,6,0,1,1,11.84-2A89.91,89.91,0,0,0,177.79,158Zm0-60a89.91,89.91,0,0,0-3.87,15,6,6,0,0,1-5.91,5,6.74,6.74,0,0,1-1-.08,6,6,0,0,1-4.93-6.91,101.43,101.43,0,0,1,4.4-17,6,6,0,1,1,11.31,4Z"/></svg></div>
         <div>
           <h4>Baseballs &amp; Wiffle Balls <span class="badge-essential">Essential</span></h4>
           <p>A bucket of practice balls for tee work and soft toss. Wiffle balls are great for limited-space hitting.</p>
         </div>
       </div>
       <div class="equip-item">
-        <div class="equip-icon">🧤</div>
+        <div class="equip-icon"><svg class="icon icon-24" viewBox="0 0 256 256" fill="currentColor"><path d="M188,82a25.85,25.85,0,0,0-14.59,4.49A26,26,0,0,0,128,75.41,26,26,0,0,0,82,92v22H68a26,26,0,0,0-26,26v12a86,86,0,0,0,172,0V108A26,26,0,0,0,188,82Zm14,70a74,74,0,0,1-148,0V140a14,14,0,0,1,14-14H82v26a6,6,0,0,0,12,0V92a14,14,0,0,1,28,0v28a6,6,0,0,0,12,0V92a14,14,0,0,1,28,0v28a6,6,0,0,0,12,0V108a14,14,0,0,1,28,0Z"/></svg></div>
         <div>
           <h4>Glove <span class="badge-essential">Essential</span></h4>
           <p>Properly sized and broken in. The player should be able to open and close it easily.</p>
         </div>
       </div>
       <div class="equip-item">
-        <div class="equip-icon">💪</div>
+        <div class="equip-icon"><svg class="icon icon-24" viewBox="0 0 256 256" fill="currentColor"><path d="M248,122H238V88a14,14,0,0,0-14-14H206V64a14,14,0,0,0-14-14H168a14,14,0,0,0-14,14v58H102V64A14,14,0,0,0,88,50H64A14,14,0,0,0,50,64V74H32A14,14,0,0,0,18,88v34H8a6,6,0,0,0,0,12H18v34a14,14,0,0,0,14,14H50v10a14,14,0,0,0,14,14H88a14,14,0,0,0,14-14V134h52v58a14,14,0,0,0,14,14h24a14,14,0,0,0,14-14V182h18a14,14,0,0,0,14-14V134h10a6,6,0,0,0,0-12ZM32,170a2,2,0,0,1-2-2V88a2,2,0,0,1,2-2H50v84Zm58,22a2,2,0,0,1-2,2H64a2,2,0,0,1-2-2V64a2,2,0,0,1,2-2H88a2,2,0,0,1,2,2Zm104,0a2,2,0,0,1-2,2H168a2,2,0,0,1-2-2V64a2,2,0,0,1,2-2h24a2,2,0,0,1,2,2Zm32-24a2,2,0,0,1-2,2H206V86h18a2,2,0,0,1,2,2Z"/></svg></div>
         <div>
           <h4>Resistance Bands (J-Bands) <span class="badge-essential">Essential</span></h4>
           <p>For the daily arm care routine. Injury prevention and shoulder strengthening. Critical for ages 9 and up.</p>
         </div>
       </div>
       <div class="equip-item">
-        <div class="equip-icon">🔶</div>
+        <div class="equip-icon"><svg class="icon icon-24" viewBox="0 0 256 256" fill="currentColor"><path d="M232,122H221.8A94.13,94.13,0,0,0,134,34.2V24a6,6,0,0,0-12,0V34.2A94.13,94.13,0,0,0,34.2,122H24a6,6,0,0,0,0,12H34.2A94.13,94.13,0,0,0,122,221.8V232a6,6,0,0,0,12,0V221.8A94.13,94.13,0,0,0,221.8,134H232a6,6,0,0,0,0-12Zm-98,87.76V200a6,6,0,0,0-12,0v9.76A82.09,82.09,0,0,1,46.24,134H56a6,6,0,0,0,0-12H46.24A82.09,82.09,0,0,1,122,46.24V56a6,6,0,0,0,12,0V46.24A82.09,82.09,0,0,1,209.76,122H200a6,6,0,0,0,0,12h9.76A82.09,82.09,0,0,1,134,209.76ZM128,90a38,38,0,1,0,38,38A38,38,0,0,0,128,90Zm0,64a26,26,0,1,1,26-26A26,26,0,0,1,128,154Z"/></svg></div>
         <div>
           <h4>Cones <span class="badge-essential">Essential</span></h4>
           <p>For baserunning paths, agility drills, and setting up fielding stations. A set of 10–12 is plenty.</p>
         </div>
       </div>
       <div class="equip-item">
-        <div class="equip-icon">🏋️</div>
+        <div class="equip-icon"><svg class="icon icon-24" viewBox="0 0 256 256" fill="currentColor"><path d="M128,26A102,102,0,1,0,230,128,102.12,102.12,0,0,0,128,26Zm83.37,135.89a90,90,0,0,1-97.85,3.18L131.46,134H217.8A89.49,89.49,0,0,1,211.37,161.89ZM88.3,47.24a89.54,89.54,0,0,1,27.35-8.39A90,90,0,0,1,167.34,122H131.46ZM217.8,122H179.34A102.12,102.12,0,0,0,138.5,38.62,90.15,90.15,0,0,1,217.8,122ZM77.92,53.26,97.13,86.53a102.16,102.16,0,0,0-51.79,77.06A89.93,89.93,0,0,1,77.92,53.26ZM57,183.19a90,90,0,0,1,46.17-86.26L121.07,128,77.92,202.74A90.59,90.59,0,0,1,57,183.19ZM128,218a89.5,89.5,0,0,1-39.7-9.24l19.22-33.29a102.13,102.13,0,0,0,92.58,6.34A89.91,89.91,0,0,1,128,218Z"/></svg></div>
         <div>
           <h4>Medicine Ball (2–4 lb) <span class="badge-nice">Nice to Have</span></h4>
           <p>For rotational power drills. Recommended for ages 10 and up. Builds core strength that translates to bat speed.</p>
         </div>
       </div>
       <div class="equip-item">
-        <div class="equip-icon">🏃</div>
+        <div class="equip-icon"><svg class="icon icon-24" viewBox="0 0 256 256" fill="currentColor"><path d="M152,86a30,30,0,1,0-30-30A30,30,0,0,0,152,86Zm0-48a18,18,0,1,1-18,18A18,18,0,0,1,152,38Zm66.49,100.86c-.59.27-7.17,3.13-18.88,3.13-13.86,0-34.9-4-61.73-21a165.89,165.89,0,0,1-17.43,36.51c9.43,2.78,22,7.72,33.19,16.26C172.46,188.05,182,207.65,182,232a6,6,0,0,1-12,0c0-44-37.23-59.18-56.91-64.11q-1.2,1.55-2.46,3.09c-19.25,23.31-43.34,35.45-70.11,35.45A90.72,90.72,0,0,1,31.4,206,6,6,0,0,1,32.6,194c26.63,2.66,49.77-7.66,68.77-30.69,13.16-15.94,21.94-35.51,26.08-49.15-40.51-24.52-66.59-4.78-67.72-3.89a6,6,0,0,1-7.48-9.38c.37-.3,9.39-7.43,24.76-10,13.86-2.31,35.92-1.3,62.36,16.67,47.14,32,73.88,20.47,74.14,20.35a6,6,0,1,1,5,10.92Z"/></svg></div>
         <div>
           <h4>Agility Ladder <span class="badge-nice">Nice to Have</span></h4>
           <p>Quick feet and coordination work. Fun for all ages and builds the footwork that shows up everywhere on the field.</p>
         </div>
       </div>
       <div class="equip-item">
-        <div class="equip-icon">🔵</div>
+        <div class="equip-icon"><svg class="icon icon-24" viewBox="0 0 256 256" fill="currentColor"><path d="M170,76a42,42,0,1,0-42,42A42,42,0,0,0,170,76Zm-42,30a30,30,0,1,1,30-30A30,30,0,0,1,128,106Zm60,24a42,42,0,1,0,42,42A42,42,0,0,0,188,130Zm0,72a30,30,0,1,1,30-30A30,30,0,0,1,188,202ZM68,130a42,42,0,1,0,42,42A42,42,0,0,0,68,130Zm0,72a30,30,0,1,1,30-30A30,30,0,0,1,68,202Z"/></svg></div>
         <div>
           <h4>Plyo Balls <span class="badge-nice">Nice to Have</span></h4>
           <p>Weighted throwing balls for arm care and mechanics work. Driveline-recommended for ages 9+.</p>
         </div>
       </div>
       <div class="equip-item">
-        <div class="equip-icon">🪵</div>
+        <div class="equip-icon"><svg class="icon icon-24" viewBox="0 0 256 256" fill="currentColor"><path d="M214,96A86,86,0,1,0,74,162.87V240a6,6,0,0,0,2.85,5.1A5.93,5.93,0,0,0,80,246a6,6,0,0,0,2.68-.63L128,222.71l45.33,22.66A6,6,0,0,0,182,240V162.87A85.87,85.87,0,0,0,214,96ZM54,96a74,74,0,1,1,74,74A74.09,74.09,0,0,1,54,96ZM170,230.29l-39.33-19.66a6,6,0,0,0-5.36,0L86,230.29V171a85.75,85.75,0,0,0,84,0ZM128,150A54,54,0,1,0,74,96,54.06,54.06,0,0,0,128,150Zm0-96A42,42,0,1,1,86,96,42,42,0,0,1,128,54Z"/></svg></div>
         <div>
           <h4>Weighted Bat or Donut <span class="badge-nice">Nice to Have</span></h4>
           <p>For warm-up swings and building bat speed. Ages 10+ only. A few heavy swings before regular swings.</p>
@@ -1826,13 +1941,12 @@ section:nth-child(even) { background: var(--off-white); }
 
 <script>
 (function() {
-  // Mobile menu
-  const hamburger = document.querySelector('.hamburger');
-  const mobileMenu = document.getElementById('mobileMenu');
-  const mobileLinks = mobileMenu.querySelectorAll('a');
+  var hamburger = document.querySelector('.hamburger');
+  var mobileMenu = document.getElementById('mobileMenu');
+  var mobileLinks = mobileMenu.querySelectorAll('a');
 
   hamburger.addEventListener('click', function() {
-    const isOpen = mobileMenu.classList.toggle('open');
+    var isOpen = mobileMenu.classList.toggle('open');
     hamburger.classList.toggle('open');
     hamburger.setAttribute('aria-expanded', isOpen);
     document.body.style.overflow = isOpen ? 'hidden' : '';
@@ -1847,7 +1961,6 @@ section:nth-child(even) { background: var(--off-white); }
     });
   });
 
-  // Age tabs
   document.querySelectorAll('.age-tabs').forEach(function(tabGroup) {
     var group = tabGroup.dataset.group;
     var tabs = tabGroup.querySelectorAll('.age-tab');
@@ -1863,7 +1976,6 @@ section:nth-child(even) { background: var(--off-white); }
     });
   });
 
-  // Accordions
   document.querySelectorAll('.accordion-trigger').forEach(function(trigger) {
     trigger.addEventListener('click', function() {
       var body = trigger.nextElementSibling;
@@ -1873,28 +1985,40 @@ section:nth-child(even) { background: var(--off-white); }
     });
   });
 
-  // Active nav highlighting
-  var navLinks = document.querySelectorAll('.nav-links a');
-  var sections = [];
-  navLinks.forEach(function(link) {
-    var id = link.getAttribute('href').slice(1);
-    var section = document.getElementById(id);
-    if (section) sections.push({ el: section, link: link });
+  document.addEventListener('click', function(e) {
+    document.querySelectorAll('.nav-group').forEach(function(group) {
+      if (!group.contains(e.target)) group.classList.remove('open');
+    });
   });
 
-  if ('IntersectionObserver' in window) {
-    var observer = new IntersectionObserver(function(entries) {
+  var dropdownLinks = document.querySelectorAll('.nav-dropdown a');
+  var allSections = [];
+  dropdownLinks.forEach(function(link) {
+    var href = link.getAttribute('href');
+    if (href && href.startsWith('#')) {
+      var section = document.getElementById(href.slice(1));
+      if (section) allSections.push({ el: section, link: link });
+    }
+  });
+
+  var standaloneLinks = document.querySelectorAll('.nav-links > li > a.nav-link[href^="#"]');
+  standaloneLinks.forEach(function(link) {
+    var section = document.getElementById(link.getAttribute('href').slice(1));
+    if (section) allSections.push({ el: section, link: link });
+  });
+
+  if ('IntersectionObserver' in window && allSections.length) {
+    var obs = new IntersectionObserver(function(entries) {
       entries.forEach(function(entry) {
         if (entry.isIntersecting) {
-          navLinks.forEach(function(l) { l.classList.remove('active'); });
-          sections.forEach(function(s) {
+          allSections.forEach(function(s) { s.link.classList.remove('active'); });
+          allSections.forEach(function(s) {
             if (s.el === entry.target) s.link.classList.add('active');
           });
         }
       });
     }, { rootMargin: '-20% 0px -70% 0px' });
-
-    sections.forEach(function(s) { observer.observe(s.el); });
+    allSections.forEach(function(s) { obs.observe(s.el); });
   }
 })();
 </script>
